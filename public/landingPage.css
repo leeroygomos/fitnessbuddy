@@ -1,0 +1,574 @@
+html,body{
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background: #ffff;
+    font-family: sans-serif;
+}
+
+progress{
+    -webkit-appearance: progress-bar;
+    display: inline-block;
+    width:100%;
+    border: none;
+    border-radius: 14px;
+    box-shadow: inset 0px 1px 1px rgba(0,0,0,0.5), 0px 1px 0px rgba(255,255,255,0.2);
+    margin:0;
+}
+progress::-moz-progress-bar{
+    border-radius: 12px;
+    background: #3878d5;
+    box-shadow: inset 0 -2px 4px rgba(0,0,0,0.4), 0 2px 5px 0px rgba(0,0,0,0.3);
+}
+
+#progress_msg{
+    margin-top:2%;
+    margin-bottom:0;
+}
+
+
+#start{
+    outline: none;
+    border: none;
+    background: rgb(170,206,55);
+    /* color: rgb(255,237,111); */
+    color: #fafafa;
+    height: 44px;
+    font-size: 20px;
+    width: 100%;
+    margin: 20px 0;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: .4s;
+}
+#start:hover{
+    background: rgb(139,168,84);
+    font-size: 22px;
+    box-shadow: 0 0 1px #448479;
+}
+
+#signout_button{
+    border: none;
+    outline: none;
+    background: none;
+    cursor: pointer;
+    color: #0000EE;
+    padding: 0;
+    text-decoration: none;
+    font-family: inherit;
+    font-size: inherit;
+}
+
+#welcome{
+    margin: 180px auto;
+    width: 60%; 
+    text-align:center;
+    float:left;
+}
+
+.container{
+    width: 100%;
+    padding: 50px;
+    margin-top:140px;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    background-color: #e9eedc;
+    justify-content: space-between;
+}
+
+.popcontainer{
+    width: 100%;
+    height: 70%;
+    padding: 50px;
+    margin-top:2%;
+    display: flex;
+    overflow-y : scroll;
+    text-align: center;
+    align-items: center;
+    background-color: #e9eedc;
+    justify-content: space-between;
+}
+.intro p {
+    width: 380px;
+    font-size: 18px;
+    text-align: justify;
+    text-indent: 2em;
+    white-space: wrap;
+    word-wrap: normal;
+    line-height: 1.5em;
+}
+.intro {
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.banner{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    height: 500px;
+    width: 100%;
+    margin-left:130px;
+    border-radius: 4px;
+}
+footer{
+    width: 100%;
+    box-sizing: border-box;
+    height: 80px;
+    float:left;
+    margin-top:3%;
+    position: static;
+    bottom: 0px;
+    border-top: 1px solid rgb(139,168,84);
+    padding: 2px;
+}
+footer p{
+    width: 80%;
+    margin: 0 auto;
+    border-top: 1px solid rgb(139,168,84);
+    color: rgb(139,168,84);
+    text-align: center;
+    padding: 10px;
+}
+
+
+button{
+    margin: 3%;
+
+}
+
+#error{
+    color:white;
+    font-weight:bold;
+}
+
+#ranknmsg{
+    margin-left: 10%;
+    margin-top: 2%;
+}
+#img{
+    float: left;
+    margin: 2.5%;
+    
+}
+#Goal{
+    float:left;
+    margin-top: 5%;
+    margin-left: 2%;
+    width:45%;
+}
+
+#welc{
+    float:left;
+    width:200px;
+    margin-top: 5%;
+    text-align:left;
+}
+
+#calories{
+    float:left;
+    margin-left: 10%;
+    align-items: left;
+    text-align: left;
+    width:30%;
+    height:40%;
+    background-color: #cbf3c2;
+}
+
+#workoutlog{
+    float:left;
+    width:20%;
+    margin-left:2%;
+    margin-right:1%;
+    text-align:left;
+    width:30%;
+    height:40%;
+    background-color: #9dc4f4;
+}
+.add-container{
+    display: flex;
+    width: 80%;
+    margin: 100px auto;
+    align-items: center;
+}
+.add-container .show{
+    margin-left: 300px;
+}
+.form {
+    width: 420px;
+}
+.form input{
+    display: inline-block;
+    height: 40px;
+    width: 80px;
+    outline:none;
+    border: 1px solid rgb(170,206,55);
+    border-radius: 4px;
+    margin: 10px 0;
+    padding: 5px 10px;
+}
+
+#food1{
+    margin-top:5%;
+    float:left;
+    width:10%;
+    height:30%;
+}
+
+#intake{
+    float:left;
+    margin-left: 10%;
+}
+#workout{
+    float:left;
+    text-align:left;
+    margin-left: 10%;
+}
+#calculation{
+    float:right;
+    margin-right:75%;
+}
+
+#foodbtn{
+    display: inline-block;
+    height: 30px;
+    width: 150px;
+    float:right;
+    font-weight:bold;
+    background:#dc8448;
+    color: #fafafa;
+    
+    transition: 0.3s;
+    cursor: pointer;    
+}
+#work{
+    display: inline-block;
+    height: 30px;
+    width: 150px;
+    float:right;
+    font-weight:bold;
+    background:#3CB371;
+    color: #fafafa;
+    transition: 0.3s;
+    cursor: pointer;   
+}
+
+#work:hover{background: #308f5a;}
+#foodbtn:hover{background: #c46626;}
+
+#clear{
+    transition: 0.3s;
+    display: inline-block;
+    height: 30px;
+    width: 150px;
+    
+    float:right; 
+    font-weight:bold;
+    background: #CD5C5C;
+    color: #fafafa;
+    cursor: pointer;    
+}
+
+#clear:hover{background:#b63838;}
+#tdee{
+    float:left;
+    font-weight:bold;
+    font-size: 18px; 
+}
+
+#macros{
+    display: inline-block;
+    margin: 1%;
+    padding: 1%;
+    float:right;
+    font-weight:bold;
+    border-style:solid;
+    background:#a39798;
+    color: #fafafa;
+}
+
+/* #fats{
+    float: left;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+#carbs{
+    float: left;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+#protein{
+    float: left;
+    font-weight: bold;
+    font-size: 14px;
+} */
+
+#submit1{
+    font-size:80%;
+    display: inline-block;
+    height: 30px;
+    width: 150px;
+    float:right;
+    font-weight:bold;
+    margin-top:0;
+    margin-right:0px;
+    background:#dc8448;
+    color: #fafafa;
+    transition: 0.3s;
+    cursor: pointer;  
+}
+
+#submit3{
+    font-size:80%;
+    display: inline-block;
+    height: 30px;
+    width: 150px;
+    float:right;
+    margin-top:0;
+    margin-left:0;
+    margin-right:2%;
+    font-weight:bold;
+    outline:none;
+    background:rgb(139,168,84);
+    color: #fafafa;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+
+#submit4{
+    opacity: 0.7;
+    display: inline-block;
+    height: 60px;
+    width: 150px;
+    float:right;
+    margin-right:3%;
+    font-weight:bold;
+    outline:none;
+    background:rgb(0, 4, 255);
+    color: #fafafa;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+#records{
+    padding: 1%;
+    float:left;
+    border: 20px;
+    margin: 20px;
+    margin-left: 10%;
+    width:75%;
+    height:40%;
+    background-color: #ced5bd;
+    overflow: hidden;
+}
+
+#recordshead{
+    font-weight: bold;
+}
+
+
+#bench,#squat,#deadlift{
+    float:left;
+
+}
+#benchbutton,#deadliftbutton,#squatbutton{
+    display: inline-block;
+    height: 30px;
+    width: 150px;
+    float:right;
+    margin-top:0;
+    margin-right: 3%;
+    font-weight:bold;
+    outline:none;
+    background:rgb(139,168,84);
+    color: #fafafa;
+    border-radius: 4px;
+    cursor: pointer;
+    transition:0.3s;
+}
+
+#benchbutton:hover{background:#6f8643;}
+#deadliftbutton:hover{background:#6f8643;}
+#squatbutton:hover{background:#6f8643;}
+
+
+#submit,
+.form select{
+    font-size:80%;
+    display: inline-block;
+    height: 30px;
+    width: 150px;
+    float:right;
+    margin-top:0;
+    margin-right:2%;
+    font-weight:bold;
+    outline:none;
+    background:rgb(139,168,84);
+    color: #fafafa;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.form select{
+    background: #fff;
+    border: 1px solid rgb(170,206,55);
+    color: rgb(170,206,55);
+    border-radius: 4px;
+    margin: 10px 0;
+}
+
+#submit:hover{background: #6f8643;}
+#submit1:hover{background: #c46626;}
+#submit3:hover{background: #6f8643;}
+#submit4:hover{opacity: 1;}
+
+/* Tooltip container */
+.tooltip {
+    position: relative;
+    font-weight: bold;
+    display: inline-block;
+    border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
+  }
+  
+  /* Tooltip text */
+  .tooltip .tooltiptext {
+    visibility: hidden;
+    width: 200px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 15px;
+  
+    /* Position the tooltip text */
+    position: absolute;
+    z-index: 1;
+    top: -5px;
+    left: 105%;
+  
+    /* Fade in tooltip */
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  
+  /* Tooltip arrow */
+  .tooltip .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+  }
+  
+  /* Show the tooltip text when you mouse over the tooltip container */
+  .tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+  }
+
+ /* The Modal (background) */
+.modal {
+  display: block; /* Hidden by default */
+  position: fixed;
+  z-index: 1; /* Sit on top */
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow-y: scroll; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+#accordion{
+    width: 50%;
+    height: 100%;
+    text-align:left;
+    overflow-y: scroll;
+    padding:3%;
+}
+
+/* Modal Content/Box */
+.modal-content {
+  background-color: #fefefe;
+  margin-top: 5%;
+  margin-left: 10%;
+  padding: 20px;
+  border: 1px solid #888;
+  height: 60%;
+  width: 80%; /* Could be more or less, depending on screen size */
+}
+
+/* Modal Content/Box */
+.alert-content {
+  background-color: #f77066;
+  margin-top: 20%;
+  margin-left: 40%;
+  padding: 20px;
+  border-radius:15px;
+  border: 1px solid #888;
+  height: 25%;
+  width: 20%; /* Could be more or less, depending on screen size */
+}
+
+/* The Close Button */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+} 
+
+.log{
+    font: bold 11px Arial;
+    text-decoration: none;
+    background-color: #EEEEEE;
+    color: #333333;
+    float:left;
+    padding: 2px 6px 2px 6px;
+    border-top: 1px solid #CCCCCC;
+    border-right: 1px solid #333333;
+    border-bottom: 1px solid #333333;
+    border-left: 1px solid #CCCCCC;
+}
+
+
+ul.topnav {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: rgb(139,168,84);
+}
+
+ul.topnav li {float: left;}
+
+ul.topnav li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+ul.topnav li a:hover:not(.active) {background-color: rgb(87, 116, 35);}
+
+ul.topnav li a.active {background-color: rgb(113, 142, 59)}
+
+ul.topnav li.right {float: right;}
+
+@media screen and (max-width: 600px) {
+  ul.topnav li.right, 
+  ul.topnav li {float: none;}
+}

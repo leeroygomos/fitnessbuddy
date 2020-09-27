@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="trainer.css" rel="stylesheet" type = "text/css">
+    <script src= "https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <title>Personal Trainers</title>
+</head>
+<body>
+    <script>
+        function chat(id){
+            $.ajax({
+                    type: 'post',
+                    url: '/customerService',
+                    data: {conversation_id: id, who: 'trainer'},
+                    async: false,
+                    success:function(response){
+                        console.log('created chat room');
+                    }
+                });
+        }
+        
+    </script>
+
+    <ul class="topnav">
+        <li> <a href="/">Home</a> </li>
+        <li> <a href= "workouts.html"> Workouts </a> </li>
+        <li> <a href="nutrition.html">Nutrition</a> </li>
+        <li> <a href="gyms.html">Find Gyms</a> </li>
+        <li class= "rankinglist">
+            <form action="/ranking" method= "post">
+                <button type = "submit" id = "signout_button" style= "background-color: transparent; margin-bottom:5px;">
+                <span>
+                <a> Leaderboards </a> </span></button></form></li>
+        <li class= "trainerlist"> 
+                <form action="/trainers" method="post">
+                    <button type="submit" id="signout_button" style="
+                      background-color: transparent;
+                      margin-bottom: 5px;"><span>
+                    <a class="active">Talk to a Trainer</a></span></button>
+        </form></li>
+        <li> <a href="/customerService">Public Chatroom</a> </li>
+        <li class= "buddy"> 
+                <form action="/buddy" method="post">
+                    <button type="submit" id="signout_button" style="
+                      background-color: transparent;
+                      margin-bottom: 5px;"><span>
+                    <a>Find a Fitness Buddy</a></span></button>
+        </form></li>
+        <li class= "right"> 
+            <form action="/signout" method="post">
+                <button type="submit" id="signout_button" style="
+                  background-color: transparent;
+                  margin-bottom: 5px;"><span>
+                <a>Sign Out</a></span></button>
+            </form></li>   
+    </ul>
+
+    <h2 style= "margin-left: 10% "> Our Trainers</h1>
+
+    <% for (var i = 0 ; i < users.length ; i++){ %>
+        <div class = 'card'>
+            <img src= <%= users[i].pp %> style="width:100%;">
+            <h3><%= users[i].name %></h3>
+            <p class>Experience: <%= users[i].experience %> years</p>
+            <p class>Company: <%= users[i].company %></p>
+            <p>Email: <%= users[i].email %></p>
+            <p>Phone: <%= users[i].phone %></p>
+            <form action="/chat" method="post">
+                <button type='submit' class='chat' style= "float:right;"  name = 'trainer' value = <%= users[i].username %> > Chat with <%= users[i].name %> </button>
+            </form>
+        </div>
+
+        
+    <%}%>
+
+    <footer>
+        <p>Group Pineapple | copyright 2019</p>
+    </footer>
+</body>
+</html>

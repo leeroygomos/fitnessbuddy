@@ -1,0 +1,113 @@
+html,body{
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background: #ffff;
+    font-family: sans-serif;
+}
+
+
+.header{
+    height: 50px;
+    background: rgb(139,168,84);
+    display: flex;
+    align-items: flex-end;
+    box-shadow: 0 0 1px #448479;
+    padding: 0 10%;
+}
+.header span{
+    padding: 5px 10px;
+    margin: 0;
+    /* color: rgb(255,237,111); */
+    color: #fafafa;
+}
+.header a:link,
+.header a:active,
+.header a:focus,
+.header a:visited{
+    text-decoration: none;
+    color: #fafafa;
+    font-size: 16px;
+}
+
+#start{
+    outline: none;
+    border: none;
+    background: rgb(170,206,55);
+    /* color: rgb(255,237,111); */
+    color: #fafafa;
+    height: 44px;
+    font-size: 20px;
+    width: 100%;
+    margin: 20px 0;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: .4s;
+}
+#start:hover{
+    background: rgb(139,168,84);
+    font-size: 22px;
+    box-shadow: 0 0 1px #448479;
+}
+
+#signout_button{
+    border: none;
+    outline: none;
+    background: none;
+    cursor: pointer;
+    color: #0000EE;
+    padding: 0;
+    text-decoration: none;
+    font-family: inherit;
+    font-size: inherit;
+}
+
+#DataTable{
+    width: 80%;
+    margin-top: 0%;
+    margin-left: 7%;
+    margin-bottom:7%;
+
+    height: 70%;
+    overflow:auto;
+    float:left;
+
+}
+
+table{
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td,th{
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even){
+    background-color: #dddddd;
+}
+
+
+
+footer{
+    width: 100%;
+    box-sizing: border-box;
+    height: 80px;
+    margin-bottom:-5%;
+    position: absolute;
+    bottom: 0px;
+    border-top: 1px solid rgb(139,168,84);
+    padding: 2px;
+}
+footer p{
+    width: 80%;
+    margin: 0 auto;
+    float:left;
+    border-top: 1px solid rgb(139,168,84);
+    color: rgb(139,168,84);
+    text-align: center;
+    padding: 10px;
+}
+

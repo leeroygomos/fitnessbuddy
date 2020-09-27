@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src= "https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <title>Signup to FitnessBuddy!</title>
+    <link href="css/sign_css.css" rel="stylesheet" type = "text/css">
+
+
+</head>
+<body>
+    <ul class="topnav">
+        <li> <a href="/">Home</a> </li>
+        <li class= "right"> <a class="active" href="whichSignUp.html"> Sign Up </a> </li>  
+        <li class = "right"> <a href="login.html"> Login </a> </li>
+    </ul>
+
+    <div class="container">
+        <div class="intro">
+            <h3> Tell us about yourself! </h3>
+            <form class='' action='/signup' method='post'>
+                Username: <input type='text' name='username' id ='username' value='' required ><br><br>
+
+                Password: <input type='password' name='password' id='password' value='' required><br><br>
+
+                Password Confirmation: <input type='password' name='password2' id='password2' value='' onkeyup="confirmPass();" required> <br><br>
+
+                Name: <input type='text' id='name' name='name' value='' required><br><br>
+
+                Gender:
+                <div id= "gender_input" style="width: 100px">
+                    Male <input type= "radio" name= "gender" value= "male">   <br>
+                    Female &nbsp; <input type= "radio" name= "gender" value= "female">  <br>
+                </div>
+                <br><br><br><br>
+                Weight: <input type='number' id='weight' name='weight' value='' placeholder="in kilograms" required ><br><br>
+
+                What is your goal weight? :
+                <input type= 'number' id='goal' name='goal' value= '' placeholder='in kilograms' required onkeyup="confirmGoal()"> <br><br>
+
+                Height: <input type='number' id='height' name='height' value='' placeholder="in centimetres" required><br><br>
+
+                Date of Birth: <input type='date' id='dob' name='dob' value='' required><br><br>
+
+                <h4>How Active Are You?</h4> 
+                <input type= "radio" name="activity" value= "Very Active"> 
+                <b> Very Active: </b> Spend most of the day doing heavy physical activity. (e.g. construction worker) <br><br>
+                <input type= "radio" name="activity" value= "Active"> 
+                <b> Moderately Active: </b> Spend a good part of the day doing some physical activity. (e.g. mailman) <br><br>
+                <input type= "radio" name= "activity" value= "Lightly Active">
+                <b> Lightly Active: </b> Spend a good part of the day standing (e.g. teacher) <br><br>
+                <input type= "radio" name= "activity" value= "Sedentary"> 
+                <b> Sedentary: </b> Spend most of the day sitting. (e.g. deskjob) <br><br><br>
+
+                
+                <h5 id= "error"> </h5> <br>
+                <h5 style= "float:left; margin:0"> Already a member? <a href= "login.html"> Login Here</a> </h5> <br>
+                <h5 style="float:left; margin:0"> Sign up as Trainer? <a href="trainer_signup.html"> Trainer Sign Up </a></h5>
+
+                <button type='submit' id="submit" style="float:right; margin:0">Sign up</button>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <p>Group Pineapple | copyright 2019</p>
+    </footer>
+
+</body>
+<script>
+    function confirmPass(){
+        var password = document.getElementById("password"),
+            password_confirm = document.getElementById("password2");
+
+        if(password.value != password_confirm.value) {
+            password_confirm.setCustomValidity("Passwords don't match.");
+            document.getElementById("error").innerHTML= "Passwords don't match!";
+        } else {
+            password_confirm.setCustomValidity('');
+            document.getElementById("error").innerHTML= "";
+        }
+    }
+    function confirmGoal(){
+        var goal = document.getElementById("goal"),
+            weight = document.getElementById("weight");
+        if (goal.value == weight.value){
+            goal.setCustomValidity("goal is equal to your current weight");
+            document.getElementById("error").innerHTML= "goal is equal to your current weight";
+        }
+        else {
+            goal.setCustomValidity('');
+            document.getElementById("error").innerHTML= "";
+        }
+    }
+
+</script>
+</html>
+

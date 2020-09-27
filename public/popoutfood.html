@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Nutrition</title>
+    <link href="css/Nutrition.css" rel="stylesheet" type = "text/css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  </head>
+  <body>
+    <!-- search -->
+    <div class="search">
+      <div class="page-header"><h1>Nutrition Facts!</h1></div>
+      <div class="form-group">
+        <label for="searchTerm">Search for food:</label><br><br>
+        <input type="searchTerm" name="searchTerm" id="searchTerm">
+        <input type="submit" name="searchTerm" id="submit-button" value="Search"><br><br>
+      </div>
+    </div>
+
+    <!-- results -->
+    <div class="container" style="overflow-y:scroll">
+      <div id="accordion" role="tablist" aria-multiselectable="true">
+      </div>
+    </div>
+
+
+     <footer>
+        <p>Group Pineapple | copyright 2019</p>
+    </footer>
+
+
+    <script src="nutritionix-api-adapter.js"></script>
+    <script src="popout.js"></script>
+
+  </body>
+</html>

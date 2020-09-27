@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="css/trainerhome.css" rel="stylesheet" type = "text/css">
+    <title>Clients</title>
+</head>
+<body>
+    <ul class="topnav">
+        <li> <a href="/">Home</a> </li>
+        <li> <a href= "workouts.html"> Workouts </a> </li>
+        <li> <a href="nutrition.html">Nutrition</a> </li>
+        <li> <a href="gyms.html">Find Gyms</a> </li>
+        <li class= "rankinglist">
+            <form action="/ranking" method= "post">
+                <button type = "submit" id = "signout_button" style= "background-color: transparent; margin-bottom:5px;">
+                <span>
+                <a> Leaderboards </a> </span></button></form></li>
+        <li> <a class="active" href="client.html">See your clients</a> </li>
+        <li class= "right"> 
+            <form action="/signout" method="post">
+                <button type="submit" id="signout_button" style="
+                  background-color: transparent;
+                  margin-bottom: 5px;"><span>
+                <a>Sign Out</a></span></button>
+            </form></li>   
+    </ul>
+    
+    <h1>Client page</h1>
+
+    <p>name: <%= name %></p>
+    <p>user: <%= user %></p>
+
+    <footer>
+        <p>Group Pineapple | copyright 2019</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/purecss@0.6.2/build/pure-min.css" integrity="sha384-UQiGfs9ICog+LwheBSRCt1o5cbyKIHbwjWscjemyBMT9YCUMZffs6UqUTd0hObXD" crossorigin="anonymous">
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<title>Page Title</title>
+
+</head>
+<body>
+
+<div id="myDiv" style="width: 100%; height: 700px;"></div>
+
+<form class="pure-form">
+    <input type="text" class="pure-input-rounded" id='txtValue'>
+    <input type="button" value="submit" onclick="searchFood(document.getElementById('txtValue').value)" />
+</form>
+
+<script>
+
+function searchFood(value){
+    keyword=value;
+    plotFigure(keyword);
+}
+function plotFigure(keyword){
+if(typeof keyword!=='undefined'){
+var data={};
+$.ajax({
+        async:false,
+        url:'https://api.nutritionix.com/v1_1/search/'+keyword+'?results=0%3A10&type=2&fields=item_name%2Citem_id%2Cbrand_name%2Cnf_calories%2Cnf_total_fat%2Cnf_total_carbohydrate%2Cnf_protein%2Cnf_serving_weight_grams&appId=1f56dd14&appKey=4045e1ee0c046c2c47a50b2cf336e57b',
+        success: function(d){
+            data=d;
+        }
+});
+
+var nfCalories=[];
+var nfTotalFat=[];
+var nfProtein=[];
+var nfCarboHydrate=[];
+var nfScore=[];
+var nfWeight=[];
+var x=[];
+for (var i=0; i<data.hits.length;i++){
+    x[i]=data.hits[i].fields.brand_name.concat(data.hits[i].fields.item_name);
+    nfWeight[i]=data.hits[i].fields.nf_serving_weight_grams;
+    nfCalories[i]=data.hits[i].fields.nf_calories;///nfWeight[i]
+    nfTotalFat[i]=data.hits[i].fields.nf_total_fat*10;///nfWeight[i]
+    nfScore[i]=data.hits[i]._score*10;
+    nfProtein[i]=data.hits[i].fields.nf_protein*10;///nfWeight[i]
+    nfCarboHydrate[i]=data.hits[i].fields.nf_total_carbohydrate*10;///nfWeight[i]
+    
+}
+
+var trace1 = {
+  x:x,
+  y:nfCalories,
+  name: 'calories',
+  type: 'scatter'
+};
+var trace2 = {
+  x:x,
+  y: nfTotalFat,
+  name: 'fat',
+  type: 'scatter'
+};
+var trace3 = {
+  x:x,
+  y: nfScore,
+  name: 'score',
+  type: 'bar'
+};
+var trace4 = {
+  x:x,
+  y: nfProtein,
+  name: 'protein',
+  type: 'scatter'
+};
+var trace5 = {
+  x:x,
+  y: nfCarboHydrate,
+  name: 'carbohydrate',
+  type: 'scatter'
+};
+var trace6 = {
+  x:x,
+  y: nfWeight,
+  name: 'weight',
+  type: 'scatter'
+};
+var plotdata = [trace1,trace2,trace4,trace5,trace3];
+var layout = {
+  title: keyword,
+  xaxis: {
+    title: 'Products',
+    titlefont: {
+      family: 'Courier New, monospace',
+      size: 18,
+      color: '#7f7f7f'
+    }
+  },
+  yaxis: {
+    title: 'Value (kcal,g*10,g*10,g*10)',
+    titlefont: {
+      family: 'Courier New, monospace',
+      size: 18,
+      color: '#7f7f7f'
+    }
+  }
+};
+Plotly.newPlot('myDiv', plotdata, layout);
+}
+}
+
+</script>
+<p>
+Enter a keyword of food (e.g., pork), and then click "submit" button.</p>
+<p>
+The figure shows the top 10 food products from Nutritionix API with highest score indicated by the bar. The line plots show the 3 main elements of food: the fat, the protein, and the carbohydrate, and the total calories, as well.</p>
+<p>
+It can provide a guide to arrange meals based on the portion of each element and total calorie. For example, if you plan to lose weight, you are looking for the food products with low fat and calorie. Or if you want to gain muscle, you should look for high-protein product.
+</p>
+</body>
+</html>

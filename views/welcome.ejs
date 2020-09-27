@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="landingPage.css" rel="stylesheet" type = "text/css">
+    <script src= "https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <script type="text/javascript" src="tdee.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <title> Your Home Page</title>
+
+
+</head>
+<body onload= "init()"> 
+
+    <ul class="topnav">
+        <li> <a class="active" href="/">Home</a> </li>
+        <li> <a href= "workouts.html"> Workouts </a> </li>
+        <li> <a href="nutrition.html">Nutrition</a> </li>
+        <li> <a href="gyms.html">Find Gyms</a> </li>
+        <li class= "rankinglist">
+            <form action="/ranking" method= "post">
+                <button type = "submit" id = "signout_button" style= "background-color: transparent; margin-bottom:5px;">
+                <span>
+                <a> Leaderboards </a> </span></button></form></li>
+        <li class= "trainerlist"> 
+                <form action="/trainers" method="post">
+                    <button type="submit" id="signout_button" style="
+                      background-color: transparent;
+                      margin-bottom: 5px;"><span>
+                    <a>Talk to a Trainer</a></span></button>
+        </form></li>
+        <li> <a href="/customerService">Public Chatroom</a> </li>
+        <li class= "buddy"> 
+                <form action="/buddy" method="post">
+                    <button type="submit" id="signout_button" style="
+                      background-color: transparent;
+                      margin-bottom: 5px;"><span>
+                    <a>Find a Fitness Buddy</a></span></button>
+        </form></li>
+        <li class= "right"> 
+            <form action="/signout" method="post">
+                <button type="submit" id="signout_button" style="
+                  background-color: transparent;
+                  margin-bottom: 5px;"><span>
+                <a>Sign Out</a></span></button>
+            </form></li>   
+    </ul>
+
+    <div id="ranknmsg">
+        <div id= "img">
+            <img src= "img/bronze.jpg" height= "200px" width= "150px" id= "trophy" >
+            <h5 style = "margin: 0px; color: gray" id= "rank"> Rank: Bronze </h5>
+        </div>
+        <div id= "welc">
+            <h2> Welcome Back, </h2>
+            <h1 id="name"> <%= name %> </h1>
+            <h4 id="exp"> EXP: <%= exp %> pts </h4>
+        </div>
+
+        <div id= "Goal">
+            <h4 style= "float: left;" id= "cWeight"> Current Weight: <%= weight %> kg  </h4> 
+            <h4 style= "float: right;" id="gWeight"> Goal Weight:  <%= goal %> kg </h4>  <br><br><br>
+            <progress max= "100" value="0" id="progresss"> 
+
+            </progress>  
+        <h6 id= "progress_msg"> Progress: </h6> <br>
+        <!-- <button id="tdee"> Calculate TDEE </button> -->
+        <!-- <h3> TDEE: <%= data %> </h3> -->
+        <!-- <button id="tdee_button" onclick="tdee1()"> Calculate TDEE </button> -->
+       
+        
+        <button id= "submit1" type= 'button' onclick= "accomplishGoal()"> Accomplish Goal </button>
+        <button id= "submit" type= 'button' onclick="inputWeight()"> Edit Current Weight </button>
+        <button id="submit3" type= 'button' onclick="inputGoal()"> Edit Goal Weight </button> <br>
+        
+
+        <div class="tooltip">ⓘ<br><br>
+            <span class="tooltiptext">Your TDEE represents the amount of calories your body typically consumes in a day. Consume less than your TDEE to lose weight, and more to gain weight.
+            </span>
+        </div>
+        <p id= "tdee"> Your Total Daily Energy Expenditure (TDEE): <%= data %> Calories</p>  <br><br>
+        
+        </div>
+    </div>
+
+    <div id="macros">
+        <h4 id="macrohead">Your Current Macros</h2>
+        <p id= "fats">Fats: <%= fats %> g</p> <br> 
+        <p id= "carbs">Carbs: <%= carbs %> g</p> <br>
+        <p id= "protein">Protein: <%= protein %> g</p> <br>
+    </div> <br><br>
+    
+    <button id= "submit4" type= 'button' onclick="macros()"> Calculate Macronutrients </button>
+
+    <div id = "records">
+        <h3 id='recordshead'>Your personal records</h3> <br><br>
+        <p id='bench'>Bench press: <%= bench %> lbs</p> <button id='benchbutton' type= 'button' onclick= "updateRecord('bench')">Update</button> <br><br><br>
+        <p id='deadlift'>Deadlift: <%= deadlift %> lbs</p> <button id='deadliftbutton' type= 'button' onclick= "updateRecord('deadlift')">Update</button><br><br><br>
+        <p id='squat'>Squat: <%= squat %> lbs </p> <button id='squatbutton' type= 'button' onclick= "updateRecord('squat')">Update</button><br><br><br>
+    </div>
+
+
+    <div id= "calories">
+        <div id= "intake">
+            <h4> What I ate today: </h4>
+            <ul id= "foods">
+                 <%=foods %> 
+            </ul>
+        </div>
+        
+    </div>
+    <div id = "workoutlog">
+        <div id= "workout">
+            <h4> Today's workouts: </h4>
+            <ul id= "exercise">
+                <%= workouts %>
+            </ul>
+
+        </div>
+    </div>
+            
+    </div>
+    <div id= "food1">
+        <button id= "foodbtn"> Add Food </button> <br><br>
+        <button id= "work"> Log Exercise </button> <br><br>
+        <button id= "clear" type='button' onclick="clearCal()"> Clear </button>
+    </div>  
+
+    <div id= "calculation"> <h4 style= "color: #df610c" id= "totalCal"> &nbsp; = &nbsp; <%= total_calories %> calories </h4> </div>
+
+    <div id= "errorbox" class="modal">
+      <div class="alert-content">
+        <span class="close" id="close">&times;</span>
+            <h3 stlye= "color:white;"> ERROR!: <h3> 
+            <h4 id= "error"> </h4>         
+      </div>    
+    </div>
+
+  <div id="myModal" class="modal">
+      <div class="modal-content">
+        <span class="close" id="closee">&times;</span>
+            <div class="form-group">
+                <label for="searchTerm">Search for food:</label><br><br>
+                <input type="searchTerm" name="searchTerm" id="searchTerm">
+                <input type="submit" name="searchTerm" id="submit-button" value="Search"><br><br>
+            </div>
+            <div class="popcontainer">
+              <div id="accordion" role="tablist" aria-multiselectable="true">
+              </div>
+            </div>
+
+      </div>    
+    </div> 
+
+    <div id="enterWork" class="modal">
+        <div class ="modal-content">
+            <span class = "close" id="closeee"> &times; </span>
+            <h4 style= "margin-left:5%"> Description of your workout: </h4><br><br>
+            <h5 style="margin-left:10%"> Exercise: &nbsp; <input type = "exercisin" name="exercisin" id="exercisin"></h6><br><br>
+            <h5 style="margin-left:10%"> Repetitions: &nbsp; <input type = "reps" name= "reps" id= "reps"> </h6><br><br>
+            <h5 style="margin-left:10%; margin-bottom: 0%"> Sets: &nbsp; <input type= "sets" name= "sets" id= "sets"> </h6><br><br><br><br>
+            <input type= "submit" name="submitbtn" id="submit-button1" value="Log Exercise" style= "margin-left:25%; margin-top:0%;" >
+        </div>
+    </div>
+    <br><br><br>
+
+    <footer>
+        <p>Group Pineapple | copyright 2019</p>
+    </footer>
+
+
+<!-- ___________________________________________SCRIPTS_____________________________________________________-->
+    <script>
+    // Get the modal
+    var modal = document.getElementById("myModal");
+
+    // Get the button that opens the modal
+    var btn = document.getElementById("foodbtn");
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementById("closee");
+
+    var modal1=document.getElementById("enterWork");
+    var btn1= document.getElementById("work");
+    var span1= document.getElementById("closeee");
+    // When the user clicks the button, open the modal 
+    btn.onclick = function() {
+      modal.style.display = "block";
+    }
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {
+      modal.style.display = "none";
+    }
+
+    btn1.onclick= function(){
+        modal1.style.display = "block";
+    }
+    span1.onclick = function(){
+        modal1.style.display="none";
+    }
+
+</script>
+
+<script src="nutritionix-api-adapter.js"></script>
+<script src="popout.js"></script>
+<script src="workoutlog.js"></script>
+
+<script>
+        var currentWeight = <%= weight %>;
+        var currentGoal = <%= goal %>;
+        var currentEXP= <%= exp %>;
+        var flag;
+        var eb = document.getElementById("errorbox");
+        var span = document.getElementById("close");
+        var modal = document.getElementById("myModal");
+        var modal1=document.getElementById("enterWork");
+        var food = document.getElementById("foods").innerHTML;
+        var exercises= document.getElementById("exercise").innerHTML
+        
+
+        window.onclick = function(event) {
+            if (event.target == eb) {
+                eb.style.display = "none";
+            }
+            else if (event.target == modal){
+                modal.style.display = "none";
+            }
+            else if (event.target == modal1){
+                modal1.style.display = "none";
+            }
+        }
+        span.onclick = function() {
+            eb.style.display = "none";
+
+        }
+
+
+        function init(){
+            progressBar();
+            rankImg();
+            foodTable();
+            exerciseTable();
+            flag = 0 ;
+        }
+
+
+        function rankImg(){
+            if (currentEXP >= 2000){
+                document.getElementById("trophy").src= "img/gold.jpg";
+                document.getElementById("rank").innerHTML= "Rank: Gold ";
+                document.getElementById("name").style.color= "#dcc03f"
+
+            }
+            else if (currentEXP >= 1000){
+                document.getElementById("trophy").src= "img/silver.jpg";
+                document.getElementById("rank").innerHTML= "Rank: Silver ";
+                document.getElementById("name").style.color="#a9a8a6";
+            }
+            else{
+                document.getElementById("trophy").src= "img/bronze.jpg";
+                document.getElementById("rank").innerHTML= "Rank: Bronze ";
+                document.getElementById("name").style.color="#b67c23";
+            }
+        }
+
+
+        function progressBar(){
+            var progress;
+            if (currentWeight/currentGoal > 1 ){
+                // user wants to lose weight
+                progress = currentGoal/ currentWeight;
+            }
+            else{
+                // user wants to gain weight.
+                progress = currentWeight/currentGoal;
+            }
+
+            progress = progress * 100;
+            progress = Math.round(progress);
+
+            if (progress > 100){
+                progress = 100;
+            }
+
+            document.getElementById("progresss").value= progress;
+            document.getElementById("progress_msg").innerHTML= "Progress: " + progress.toString() + "%";
+        }
+
+        function accomplishGoal(){
+            var oldWeight= <%= weight %>;
+
+            if (currentWeight != currentGoal){
+                document.getElementById("error").innerHTML= "You have not achieved your goal weight yet!";
+                eb.style.display = "block";
+            }
+            else {
+                var gain = (oldWeight - currentWeight);
+                if(flag==0){
+                    gain = gain * 100;
+                    gain = Math.abs(gain);
+                } 
+                else{
+                    gain = 0
+                } 
+                
+                currentEXP = currentEXP + gain;
+                document.getElementById("exp").innerHTML = "EXP: " + currentEXP.toString() + " pts";
+                document.getElementById("gWeight").innerHTML = "Goal Weight: 0 kg";
+
+               $.ajax({
+                    type: 'put',
+                    url: '/gainEXP',
+                    data: {exp: currentEXP},
+                    async: false,
+                    success:function(response){
+                        flag = 1;
+                    }
+                });
+                rankImg();
+            }
+        }
+
+        function inputWeight(){
+            var txt;
+            var weight = prompt("Please input your current weight in kg: ");
+            if (weight == "" ){
+                txt= "You have entered in an empty input."
+                document.getElementById("error").innerHTML = txt;
+                eb.style.display = "block";
+            }
+            else if (isNaN(weight)){
+                txt= "Weight should be numeric."  
+                document.getElementById("error").innerHTML = txt;
+                eb.style.display = "block";
+            }
+            else{
+                
+                document.getElementById("error").innerHTML= "";
+                document.getElementById("cWeight").innerHTML= "Current Weight: " + weight.toString() + " kg";
+                currentWeight= weight;
+                progressBar();
+                $.ajax({
+                    type: 'put',
+                    url: '/updateWeight',
+                    data: {weight: weight},
+                    async: false,
+                    success:function(response){
+                        //document.getElementById("error").innerHTML= "works";
+                    }
+                });
+                var newTDEE;
+                $.ajax({
+                    type: 'get',
+                    url: '/tdee',
+                    data: {weight: weight},
+                    async: false,
+                    success: function(response){
+                        newTDEE = response.data;
+                        //document.getElementById("error").innerHTML= "works2";
+                    }
+                });
+                document.getElementById("tdee").innerHTML = "Your Total Daily Energy Expenditure (TDEE): " + newTDEE.toString() + " Calories";
+            }
+        };
+
+        function inputGoal(){
+
+            var newGoal = prompt("Please enter your goal weight in kg: ");
+
+            if (newGoal == currentGoal){
+                document.getElementById("error").innerHTML= "Your new goal is the same as your current goal.";
+                eb.style.display = "block";
+            }
+            else if (newGoal == currentWeight){
+                document.getElementById("error").innerHTML= "Your new goal is equal to your current weight!";
+                eb.style.display = "block";
+            }
+            else if (isNaN(newGoal)){
+                document.getElementById("error").innerHTML= "Your goal should be in numbers.";
+                eb.style.display = "block";
+            }
+            else{
+                currentGoal= newGoal;
+                document.getElementById("error").innerHTML= "";
+                document.getElementById("gWeight").innerHTML= "Goal Weight: " + newGoal.toString() + " kg"; 
+                progressBar();
+                $.ajax({
+                    type: 'put',
+                    url: '/updateGoal',
+                    data: {goal: newGoal},
+                    async: false,
+                    success:function(response){
+                        console.log("Goal changed");
+                    }
+                });
+            }
+
+        }
+
+        function macros(){
+            var tdee = <%= data %>;
+            var errormsg = "Invalid percentage";
+
+            var fatsPercent = prompt("Enter fat percentage");
+            if (isNaN(fatsPercent)){
+                document.getElementById("error").innerHTML = errormsg;
+                eb.style.display = "block";
+                return;
+            }
+            var carbsPercent = prompt("Enter carbs percentage");
+            if (isNaN(carbsPercent)){
+                document.getElementById("error").innerHTML = errormsg;
+                eb.style.display = "block";
+                return;
+            }
+            var proteinPercent = prompt("Enter protein percentage");
+            if (isNaN(proteinPercent)){
+                document.getElementById("error").innerHTML = errormsg;
+                eb.style.display = "block";
+                return;
+            }
+            
+            var sum = Number(fatsPercent) + Number(carbsPercent) + Number(proteinPercent);
+            console.log(sum);
+            if (sum != 100){
+                document.getElementById("error").innerHTML = "Percentages must add up to 100";
+                eb.style.display = "block";
+                return;
+            }
+
+            var fats = Math.round((tdee * (fatsPercent/100))/9);
+            var carbs = Math.round((tdee * (carbsPercent/100))/9);
+            var protein = Math.round((tdee * (proteinPercent/100))/9);
+
+            $.ajax({
+                    type: 'put',
+                    url: '/updateMacros',
+                    data: {fats: fats, carbs: carbs, protein: protein},
+                    async: false,
+                    success:function(response){
+                        console.log('successfully updated macros');
+                        document.getElementById("error").innerHTML = "";
+                    }
+                });
+
+            document.getElementById("fats").innerHTML = "Fats: " + fats.toString() + "g";
+            document.getElementById("carbs").innerHTML = "Carbs: " + carbs.toString() + "g";
+            document.getElementById("protein").innerHTML = "Protein: " + protein.toString() + "g";
+        }
+
+        function updateRecord(exercise){
+            var newRecord = prompt("Enter your new record:");
+            if (exercise == 'bench'){
+                document.getElementById('bench').innerHTML = 'Bench press: ' + newRecord + ' lbs';
+                $.ajax({
+                    type: 'put',
+                    url: '/updateRecord',
+                    data: {record: newRecord, exercise: exercise},
+                    async: false,
+                    success:function(response){
+                        console.log('successfully updated bench record');
+                    }
+                });
+                return;
+            }
+            else if (exercise == 'deadlift'){
+                document.getElementById('deadlift').innerHTML = 'Deadlift: ' + newRecord + ' lbs';
+                $.ajax({
+                    type: 'put',
+                    url: '/updateRecord',
+                    data: {record: newRecord, exercise: exercise},
+                    async: false,
+                    success:function(response){
+                        console.log('successfully updated deadlift record');
+                    }
+                });
+                return;
+            }
+            else if (exercise == 'squat'){
+                document.getElementById('squat').innerHTML = 'Squat: ' + newRecord + ' lbs';
+                $.ajax({
+                    type: 'put',
+                    url: '/updateRecord',
+                    data: {record: newRecord, exercise: exercise},
+                    async: false,
+                    success:function(response){
+                        console.log('successfully updated squat record');
+                    }
+                });
+                return;
+            }
+            else{
+                console.log("update record failed");
+                return;
+            }
+        }
+
+        function clearCal(){
+            var check= confirm("Are you sure you want to clear your daily log?");
+            if (check == true){
+                
+                var foodTable= "<li> None </li>";
+                
+                    $.ajax({
+                        type: 'put',
+                        url: '/clearCal',
+                        async: false,
+                        success:function(response){
+                            alert("Cleared!");
+                            document.getElementById("foods").innerHTML= foodTable;
+                            food= "";
+                            document.getElementById("totalCal").innerHTML = "&nbsp; = &nbsp; 0 calories";
+                            document.getElementById("workouts").innerHTML= foodTable;
+                            location.reload();
+                        }
+                    });
+                location.reload();
+            }
+        }
+        function foodTable(){
+            var foodArray = food.split("+");
+            var foodTable = "";
+            if (foodArray.length <= 1){
+                foodTable = "<li>" + "None" + "</li>";
+            }
+            else{
+                for (var i = 1; i < foodArray.length ; i++){
+                    foodTable += "<li>" + foodArray[i] + "</li>";
+                }
+            }  
+            document.getElementById("foods").innerHTML = foodTable;
+        }
+
+        function exerciseTable(){
+            var exerciseArray = exercises.split("+");
+            var exerciseTable = "";
+            if (exerciseArray.length <= 1){
+                exerciseTable = "<li>" + "None" + "</li>";
+            }
+            else{
+                for (var i = 1; i < exerciseArray.length ; i++){
+                    exerciseTable += "<li>" + exerciseArray[i] + "</li>";
+                }
+            }  
+            document.getElementById("exercise").innerHTML = exerciseTable;
+        }
+
+
+        function addFoodWindow(){
+            var mywindow= window.open("/popoutfood.html","","width=1000,height=500")
+        }
+
+    </script>
+
+</body>
+</html>

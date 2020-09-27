@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src= "https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <!-- <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script> -->
+    <link href="css/admin.css" rel="stylesheet" type = "text/css">
+    <title>Admin: Users Database</title>
+    <script>
+
+        function lettersOnly(txt){ 
+            if (/^[A-Za-z]+$/.test(txt)){
+            
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+
+        function delUser(username){
+            
+            console.log(username);
+
+            $.ajax({
+                    type: 'DELETE',
+                    url: '/trainerDelete',
+                    data: {username: username},
+                    async: false,
+                    success:function(response){
+                        location.reload();  
+                    }
+            });
+
+            location.reload();  
+        }
+
+        function alterUser(username){
+            var elem = prompt("What element would you like to change?");
+            var change;
+
+            if (elem == 'name'){
+                change = prompt("Please enter trainer's new name");
+                if (!lettersOnly(change)){
+                    alert("Name should be in letters only.");
+                    return;
+                }
+            }
+
+            else if (elem == 'experience'){
+                change = prompt("Please enter trainer's new experience in # of years");
+                if (isNaN(change)){
+                    alert("Experience years should be in numbers.");
+                    return;
+                }
+            }
+
+            else if (elem == 'dob'){
+                change = prompt("Please enter the new dob in yyyy-mm-dd format");
+                if (isNan(Date.parse(change))){
+                    alert("Invalid format, please try again");
+                    return;
+                }
+            }
+
+            else if (elem == 'company'){
+                change = prompt("Please enter trainer's new company name");
+            }
+
+            else if (elem == 'phone'){
+                change = prompt("Please enter trainer's new phone number in numbers only.");
+                if (isNaN(change)){
+                    alert("Phone number should be in numbers only.");
+                    return;
+                }
+            }
+            else if (elem == 'email'){
+                change = prompt("Please enter trainer's new email.");
+            }
+
+            else if (elem == 'username'){
+                change = prompt("Please enter trainer's new username");
+            }
+
+            else if (elem == 'password'){
+                change = prompt("Please enter trainer's new password");
+            }
+
+            else{
+                alert("Invalid element, please try again");
+                return;
+            }
+
+            $.ajax({
+                    type: 'put',
+                    url: '/changeTrainer',
+                    data: {username: username, elem: elem, change: change},
+                    async: false,
+                    success:function(response){
+                        console.log('information changed');
+                    }
+                });
+            location.reload();
+        }
+    </script>
+</head>
+<body>
+    <ul class="topnav">
+        <li> <a href="/">Users Database</a> </li>
+        <li class= "trainerDatabase">
+            <form action="/trainerDatabase" method= "post">
+                <button type = "submit" id = "signout_button" style= "background-color: transparent; margin-bottom:5px;">
+                <span>
+                <a class="active"> Trainers Database </a> </span></button></form></li>
+        <li> <a href= "/customerService"> Public Chat </a> </li>
+        
+        <li class= "right"> 
+            <form action="/signout" method="post">
+                <button type="submit" id="signout_button" style="
+                  background-color: transparent;
+                  margin-bottom: 5px;"><span>
+                <a>Sign Out</a></span></button>
+            </form></li>   
+    </ul>
+
+
+    <div id= "DataTable" style="margin-top:5%">
+        <% if (users.length == 0) { %>
+            no user here
+        <%} else {%>
+        <table>
+            <thead>
+                <tr>
+                    <th width="100">username</th>
+                    <th width="100">name</th>
+                    <th width="100">experience</th>
+                    <th width="100">company</th>
+                    <th width="100">phone</th>
+                    <th width="100">email</th>
+                    <th width="100">dob</th>
+                    <th width="100">operation</th>
+                </tr>
+            </thead>
+            <tbody>
+            <% for(var i=0;i < users.length;i++){ %>
+                <tr>
+                    <td id= <%=i%> ><%=users[i].username%></td>
+                    <td><%=users[i].name%></td>
+                    <td><%=users[i].experience%></td>
+                    <td><%=users[i].company%></td>
+                    <td><%=users[i].phone%></td>
+                    <td><%=users[i].email%></td>
+                    <td><%=users[i].dob%></td>
+                    <td>
+                      <!-- <form action = '/deleteuser' method = 'put'>
+                          <button type = 'submit' >delete</button>
+                      </form> -->
+                      <button type='button' onclick= "delUser(this.id)" id= <%=users[i].username%> >delete</button>
+                      <button type='button'  onclick= "alterUser(this.id)" id= <%=users[i].username%> >alter</button>
+                      <!-- <form action = '/updateuser' method = 'put'>
+                        <button type= 'submit '>alter</button>
+                      </form> -->
+                    </td>
+                </tr>
+            <%}%>
+        </tbody>
+        </table>
+    <%}%>
+
+    </div>
+
+    <footer>
+        <p>Group Pineapple | copyright 2019</p>
+    </footer>
+
+</body>
+</html>

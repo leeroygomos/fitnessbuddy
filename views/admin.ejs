@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src= "https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <!-- <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script> -->
+    <link href="css/admin.css" rel="stylesheet" type = "text/css">
+    <title>Admin: Users Database</title>
+    <script>
+        function delUser(username){
+            
+            console.log(username);
+
+            $.ajax({
+                    type: 'DELETE',
+                    url: '/deleteuser',
+                    data: {username: username},
+                    async: false,
+                    success:function(response){
+                        location.reload();  
+                    }
+            });
+
+            location.reload();  
+        }
+
+        function alterUser(username){
+            var elem = prompt("What element would you like to change?");
+            var change;
+
+            if (elem == 'weight'){
+                change = prompt("Please enter the new weight in Kg");
+                if (isNaN(change)){
+                    alert("Invalid element, please try again");
+                    return;
+                }
+            }
+
+            else if (elem == 'height'){
+                change = prompt("Please enter the new height in cm");
+                if (isNaN(change)){
+                    alert("Invalid element, please try again");
+                    return;
+                }
+            }
+
+            else if (elem == 'dob'){
+                change = prompt("Please enter the new dob in yyyy-mm-dd format");
+                if (isNan(Date.parse(change))){
+                    alert("Invalid element, please try again");
+                    return;
+                }
+            }
+
+            else if (elem == 'activity'){
+                change = prompt("Please enter one of the following: Sedentary, Lightly Active, Active, Very Active");
+                if (change !== 'Sedentary' || change !== 'Lightly Active' || change !== 'Active' || change !== 'Very Active'){
+                    alert("Invalid element, please try again");
+                    return;
+                }
+            }
+
+            else if (elem == 'name'){
+                change = prompt("Please enter the new name");
+            }
+
+            else if (elem == 'username'){
+                change = prompt("Please enter the new username");
+            }
+
+            else if (elem == 'password'){
+                change = prompt("Please enter the new password");
+            }
+
+            else{
+                alert("Invalid element, please try again");
+                return;
+            }
+
+            $.ajax({
+                    type: 'put',
+                    url: '/updateuser',
+                    data: {username: username, elem: elem, change: change},
+                    async: false,
+                    success:function(response){
+                        location.reload();
+                    }
+                });
+            
+            location.reload();
+        }
+    </script>
+</head>
+<body>
+    <ul class="topnav">
+        <li> <a class="active" href="/">Users Database</a> </li>
+        <li class= "trainerDatabase">
+            <form action="/trainerDatabase" method= "post">
+                <button type = "submit" id = "signout_button" style= "background-color: transparent; margin-bottom:5px;">
+                <span>
+                <a> Trainers Database </a> </span></button></form></li>
+        <li> <a href= "/customerService"> Public Chat </a> </li>
+        
+        <li class= "right"> 
+            <form action="/signout" method="post">
+                <button type="submit" id="signout_button" style="
+                  background-color: transparent;
+                  margin-bottom: 5px;"><span>
+                <a>Sign Out</a></span></button>
+            </form></li>   
+    </ul>
+
+
+    <div id= "DataTable" style="margin-top:5%">
+        <% if (users.length == 0) { %>
+            no user here
+        <%} else {%>
+        <table>
+            <thead>
+                <tr>
+                    <th width="100">username</th>
+                    <th width="100">name</th>
+                    <th width="100">height</th>
+                    <th width="100">weight</th>
+                    <th width="100">dob</th>
+                    <th width="100">activity</th>
+                    <th width="100">operation</th>
+                </tr>
+            </thead>
+            <tbody>
+            <% for(var i=0;i < users.length;i++){ %>
+                <tr>
+                    <td id= <%=i%> ><%=users[i].username%></td>
+                    <td><%=users[i].name%></td>
+                    <td><%=users[i].height%></td>
+                    <td><%=users[i].weight%></td>
+                    <td><%=users[i].dob%></td>
+                    <td><%=users[i].activity%></td>
+                    <td>
+                      <!-- <form action = '/deleteuser' method = 'put'>
+                          <button type = 'submit' >delete</button>
+                      </form> -->
+                      <button type='button' onclick= "delUser(this.id)" id= <%=users[i].username%> >delete</button>
+                      <button type='button'  onclick= "alterUser(this.id)" id= <%=users[i].username%> >alter</button>
+                      <!-- <form action = '/updateuser' method = 'put'>
+                        <button type= 'submit '>alter</button>
+                      </form> -->
+                    </td>
+                </tr>
+            <%}%>
+        </tbody>
+        </table>
+    <%}%>
+
+    </div>
+
+    <footer>
+        <p>Group Pineapple | copyright 2019</p>
+    </footer>
+
+</body>
+</html>

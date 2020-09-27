@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="css/chat.css" rel="stylesheet" type = "text/css">
+    <script src="/socket.io/socket.io.js"></script>
+    <script src= "https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <!-- <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script> -->
+    <title>Private Chat</title>
+</head>
+<body>
+    <ul class="topnav">
+        <li> <a href="/">Home</a> </li>
+        <li> <a href= "workout_trainer.html"> Workouts </a> </li>
+        <li> <a href="nutrition_trainer.html">Nutrition</a> </li>
+        <li> <a href="gyms_trainer.html">Find Gyms</a> </li>
+        <li class= "rankinglist">
+            <form action="/chat" method= "post">
+                <button type = "submit" id = "signout_button" style= "background-color: transparent; margin-bottom:5px;">
+                <span>
+                <a class="active"> Your Private Chatroom </a> </span></button></form></li>
+        <li class= "right"> 
+            <form action="/signout" method="post">
+                <button type="submit" id="signout_button" style="
+                  background-color: transparent;
+                  margin-bottom: 5px;"><span>
+                <a>Sign Out</a></span></button>
+            </form></li>   
+    </ul>
+
+    <div class="main-container">
+        <div class="chat-container">
+            <h1> Welcome to the <%=chatType %> Chat</h1>
+            <div class="chat-content">
+                
+            </div>
+            <div class="handle">
+                <input type="text" id="msg">
+                <button id="btn-submit">send message</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="connected-users">
+        <h3> Connected Users</h3>
+        <p id = 'user'></p>
+    </div>
+
+    <script>
+        // var name = ( '<%=name%>' === 'admin' ) ? 'admin' : 'user';
+        // var role = name + 'Msg'
+        // var socket = io();
+        // if(name === 'admin'){
+        //     socket.emit('admin');
+        // }
+        // $('#btn-submit').click(function(){
+        //     socket.emit(role, $("#msg").val());
+        //     $('#msg').val('');
+        // })
+
+        // socket.on('adminResponseMsg', function(msg){
+        //     if(name === 'admin'){
+        //         $('.chat-content').append('<div class="me">' +msg +'</div>');
+        //     }else{
+        //         $('.chat-content').append('<div class="you">'+msg+'</div>');
+        //     }
+        // })
+        // socket.on('userResponseMsg', function(msg){
+        //     if(name === 'admin'){
+        //         $('.chat-content').append('<div class="you">'+msg+'</div>');
+        //     }else{
+        //         $('.chat-content').append('<div class="me">'+msg+'</div>');
+        //     }
+        // })
+
+        var socket = io();
+
+        var conversation_id = '<%=conversation_id%>';
+        var user = '<%=name%>';
+
+        socket.emit('subscribe', {
+            room: conversation_id,
+            user: user
+        });
+
+        var userList = [];
+
+        socket.on('update', function (users){
+            userList = users;
+            console.log(userList);
+            $('#user').empty();
+            for(var i=0; i<userList.length; i++) {
+                if (userList[i] !== null){
+                    $('#user').append("<h1>" + userList[i] + "</h1>"); 
+                }
+            }
+        });
+
+        $('#btn-submit').click(function(){
+            socket.emit('send message', {
+                room: conversation_id,
+                message: $("#msg").val(),
+                sender: user
+            });
+            $('#msg').val('');
+        })
+
+        // sockets.on('clients', function(clients){
+        //     console.log(clients);
+        // });
+
+        window.onbeforeunload = function(){
+            console.log('closing socket');
+            socket.emit('disconnect', function(){
+                console.log('disconnected');
+            });
+        }
+
+        socket.on('conversation private post', function(data) {
+            //display data.message
+            $('.chat-content').append('<div class="you">' + data.sender + ': ' + data.message + '</div>');
+        });
+
+
+    </script>
+
+
+</body>
+</html>

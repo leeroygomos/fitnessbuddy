@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src= "https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyBs94v-5s35rYdH-QJwKS57M1pXn97R6ho" type="text/javascript"></script>
+    <link href="gyms.css" rel="stylesheet" type = "text/css">
+    <title>Find Nearby Gyms</title>
+
+    <script type='text/javascript'>
+        function mainGym(){
+            var ID = gymID;
+            console.log("nice");
+            $.ajax({
+                type: 'put',
+                url: '/mainGym',
+                data: {gymID: ID},
+                async: false,
+                success:function(response){
+                    console.log('Successfully added main gym');
+                    document.getElementById('message').innerHTML = 'Added as main gym!';
+                }
+            });
+        }
+
+    </script>
+
+</head>
+<body>
+<ul class="topnav">
+        <li> <a href="/">Home</a> </li>
+        <li> <a href= "workouts.html"> Workouts </a> </li>
+        <li> <a href="nutrition.html">Nutrition</a> </li>
+        <li> <a class="active" href="gyms.html">Find Gyms</a> </li>
+        <li class= "rankinglist">
+            <form action="/ranking" method= "post">
+                <button type = "submit" id = "signout_button" style= "background-color: transparent; margin-bottom:5px;">
+                <span>
+                <a> Leaderboards </a> </span></button></form></li>
+        <li class= "trainerlist"> 
+                <form action="/trainers" method="post">
+                    <button type="submit" id="signout_button" style="
+                      background-color: transparent;
+                      margin-bottom: 5px;"><span>
+                    <a>Talk to a Trainer</a></span></button>
+        </form></li>
+        <li> <a href="/customerService">Public Chatroom</a> </li>
+        <li class= "buddy"> 
+                <form action="/buddy" method="post">
+                    <button type="submit" id="signout_button" style="
+                      background-color: transparent;
+                      margin-bottom: 5px;"><span>
+                    <a>Find a Fitness Buddy</a></span></button>
+        </form></li>
+        <li class= "right"> 
+            <form action="/signout" method="post">
+                <button type="submit" id="signout_button" style="
+                  background-color: transparent;
+                  margin-bottom: 5px;"><span>
+                <a>Sign Out</a></span></button>
+            </form></li>   
+    </ul>
+
+    <h3>&nbsp;&nbsp;&nbsp;To find gyms near you, right click on your position on the map</h2>
+    <div id="map"></div>
+    <script>
+        var map;
+        var infowindow;
+        var gymID;
+
+        var request;
+        var service;
+        var markers = [];
+
+        function initMap(){
+            var center = new google.maps.LatLng(49.277,-122.919);
+            map = new google.maps.Map(document.getElementById('map'),{
+                center: center,
+                zoom: 13
+            });
+
+            request = {
+                location: center,
+                radius: 8047,
+                types: ['gym']
+            };
+
+            infowindow = new google.maps.InfoWindow();
+
+            var service = new google.maps.places.PlacesService(map);
+
+            service.nearbySearch(request, callback);
+
+            google.maps.event.addListener(map, 'rightclick', function(event){
+                map.setCenter(event.latLng);
+                clearResults(markers);
+
+                request = {
+                    location: event.latLng,
+                    radius: 8047,
+                    types: ['gym']
+                };
+                service.nearbySearch(request, callback);
+            });
+        }
+
+        function callback(results, status){
+            if (status == google.maps.places.PlacesServiceStatus.OK){
+                for (var i = 0; i < results.length; i++){
+                    markers.push(createMarker(results[i]));
+                }
+            }
+        }
+
+        function createMarker(place){
+            
+            var placeLoc = place.geometry.location;
+            var marker = new google.maps.Marker({
+                map: map,
+                position: place.geometry.location
+            });
+
+            var request = {
+                placeId: place.place_id,
+                fields: ['name', 'formatted_address', 'place_id']
+            };
+
+            var service = new google.maps.places.PlacesService(map);
+
+            gymID = place.place_id;
+            service.getDetails(request, function(place, status){
+                google.maps.event.addListener(marker, 'click', function(){
+                    infowindow.setContent('<div><strong>' + place.name + '</strong><br>' + 
+                        place.formatted_address + '<br>' + 
+                        "<button type ='button' id ='butt' onclick='mainGym()'> Set as Main Gym </button><br>" +
+                        "<p id='message'></p>" +
+                        '</div>');
+                    infowindow.open(map, this);
+
+                });
+            }); 
+            return marker;
+        }
+
+        function clearResults(markers){
+            for (var m in markers){
+                markers[m].setMap(null);
+            }
+            markers = [];
+        }
+
+
+
+        google.maps.event.addDomListener(window, 'load', initMap);
+    </script>
+
+    <!-- <script async defer src="https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-33.8670522,151.1957362&radius=15000&types=gym&key=AIzaSyCgHLeu01nbKjJF1o01_Ybsr4V7RFfwwvo"></script> -->
+
+    <footer>
+        <p>Group Pineapple | copyright 2019</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Nutrition</title>
+    <link href="css/Nutrition.css" rel="stylesheet" type = "text/css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  </head>
+  <body>
+
+        <ul class="topnav">
+        <li> <a href="/">Home</a> </li>
+        <li> <a href= "workout_trainer.html"> Workouts </a> </li>
+        <li> <a class="active" href="nutrition_trainer.html">Nutrition</a> </li>
+        <li> <a href="gyms_trainer.html">Find Gyms</a> </li>
+        <li class= "rankinglist">
+            <form action="/chat" method= "post">
+                <button type = "submit" id = "signout_button" style= "background-color: transparent; margin-bottom:5px;">
+                <span>
+                <a> Your Private Chatroom </a> </span></button></form></li>
+        <li class= "right"> 
+            <form action="/signout" method="post">
+                <button type="submit" id="signout_button" style="
+                  background-color: transparent;
+                  margin-bottom: 5px;"><span>
+                <a>Sign Out</a></span></button>
+            </form></li>   
+    </ul>
+
+
+    <!-- search -->
+    <div class="search">
+        <img src= "img/nutrition.png" height= "200px" style= "margin-right:1%;">
+      <div class="page-header" style="margin-left:1%;"><h1>Nutrition Facts!</h1></div>
+      <div class="form-group">
+        <label for="searchTerm">Search for food:</label><br><br>
+        <input type="searchTerm" name="searchTerm" id="searchTerm">
+        <input type="submit" name="searchTerm" id="submit-button" value="Search"><br><br>
+      </div>
+    </div>
+
+    <!-- results -->
+    <div class="container" style="overflow-y:scroll">
+      <div id="accordion" role="tablist" aria-multiselectable="true">
+      </div>
+    </div>
+
+
+     <footer>
+        <p>Group Pineapple | copyright 2019</p>
+    </footer>
+
+
+    <script src="nutritionix-api-adapter.js"></script>
+    <script src="nutritiontrainer.js"></script>
+
+  </body>
+</html>

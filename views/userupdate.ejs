@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>update one's userinf!</title>
+    <link href="/css/sign_css.css" rel="stylesheet" type = "text/css">
+    <style>
+        #signout_button{
+            background:transparent;
+            border:none;
+            outline:none;
+            font-size:16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <span><a href="/">/ home / </a></span>
+        <form action="/signout" method="post" style="color:white;position:absolute;right:100px;">
+            <!-- <span> <a href="/"> Sign Out </a> -->
+            / <button type="submit" id="signout_button"><span><a>Sign Out</a></span></button> / 
+        </form>
+        <!-- <span> <a href= "/"> Sign Out </a> -->
+    </div>
+
+    <div class="container">
+        <div class="intro">
+            <h3> change the userinfo! </h3>
+            <form class='' action='/updateuser/<%=user.id%>' method='post'>
+                Username: <input type='text' name='username' id ='username' value='<%=user.username%>' required><br><br>
+
+                Name: <input type='text' id='name' name='name' value='<%=user.name%>' required><br><br>
+
+                Gender:
+                <div id= "gender_input" style="width: 100px">
+                     <% if(user.gender == 'male') {%>
+                        Male <input type= "radio" name= "gender" value= "male" checked><br>
+                        Female &nbsp; <input type= "radio" name= "gender" value= "female">  <br>
+                    <%}else{%>
+                        Male <input type= "radio" name= "gender" value= "male"><br>
+                        Female &nbsp; <input type= "radio" name= "gender" value= "female" checked>  <br>
+                    <%}%>
+                </div>
+                <br><br><br><br>
+                Weight: <input type='number' id='weight' name='weight' value='<%=user.weight%>' placeholder="in kilograms" required><br><br>
+
+                Height: <input type='number' id='height' name='height' value='<%=user.height%>' placeholder="in centimetres" required><br><br>
+
+                Date of Birth: <input type='date' id='dob' name='dob' value='<%=user.dob%>' required><br><br>
+
+                <h4>How Active Are You?</h4> 
+                <% if(user.activity === "Very Active"){%>
+                    <input type= "radio" name="activity" value= "Very Active" checked> 
+                    <b> Very Active: </b> Spend most of the day doing heavy physical activity. (e.g. construction worker) <br><br>
+                    <input type= "radio" name="activity" value= "Active"> 
+                    <b> Moderately Active: </b> Spend a good part of the day doing some physical activity. (e.g. mailman) <br><br>
+                    <input type= "radio" name= "activity" value= "Lightly Active">
+                    <b> Lightly Active: </b> Spend a good part of the day standing (e.g. teacher) <br><br>
+                    <input type= "radio" name= "activity" value= "Sedentary"> 
+                    <b> Sedentary: </b> Spend most of the day sitting. (e.g. deskjob) <br><br><br>
+                <%}else if(user.activity === "Active"){%>
+                    <input type= "radio" name="activity" value= "Very Active"> 
+                    <b> Very Active: </b> Spend most of the day doing heavy physical activity. (e.g. construction worker) <br><br>
+                    <input type= "radio" name="activity" value= "Active" checked> 
+                    <b> Moderately Active: </b> Spend a good part of the day doing some physical activity. (e.g. mailman) <br><br>
+                    <input type= "radio" name= "activity" value= "Lightly Active">
+                    <b> Lightly Active: </b> Spend a good part of the day standing (e.g. teacher) <br><br>
+                    <input type= "radio" name= "activity" value= "Sedentary"> 
+                    <b> Sedentary: </b> Spend most of the day sitting. (e.g. deskjob) <br><br><br>
+                <%}else if(user.activity === "Lightly Active"){%>
+                    <input type= "radio" name="activity" value= "Very Active"> 
+                    <b> Very Active: </b> Spend most of the day doing heavy physical activity. (e.g. construction worker) <br><br>
+                    <input type= "radio" name="activity" value= "Active"> 
+                    <b> Moderately Active: </b> Spend a good part of the day doing some physical activity. (e.g. mailman) <br><br>
+                    <input type= "radio" name= "activity" value= "Lightly Active" checked>
+                    <b> Lightly Active: </b> Spend a good part of the day standing (e.g. teacher) <br><br>
+                    <input type= "radio" name= "activity" value= "Sedentary"> 
+                    <b> Sedentary: </b> Spend most of the day sitting. (e.g. deskjob) <br><br><br>
+                <%}else{%>
+                    <input type= "radio" name="activity" value= "Very Active"> 
+                    <b> Very Active: </b> Spend most of the day doing heavy physical activity. (e.g. construction worker) <br><br>
+                    <input type= "radio" name="activity" value= "Active"> 
+                    <b> Moderately Active: </b> Spend a good part of the day doing some physical activity. (e.g. mailman) <br><br>
+                    <input type= "radio" name= "activity" value= "Lightly Active">
+                    <b> Lightly Active: </b> Spend a good part of the day standing (e.g. teacher) <br><br>
+                    <input type= "radio" name= "activity" value= "Sedentary" checked> 
+                    <b> Sedentary: </b> Spend most of the day sitting. (e.g. deskjob) <br><br><br>
+                <%}%>
+
+                <button type='submit' id="submit">confirm</button>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <p>Group Pineapple | copyright 2019</p>
+    </footer>
+
+</body>
+<script>
+    
+</script>
+</html>
+

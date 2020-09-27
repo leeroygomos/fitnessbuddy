@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Search for Workouts</title>
+    <script src= "https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <link href="css/workouts.css" rel="stylesheet" type = "text/css">
+</head>
+
+<body>
+    <ul class="topnav">
+        <li> <a href="/">Home</a> </li>
+        <li> <a class="active" href= "workouts.html"> Workouts </a> </li>
+        <li> <a href="nutrition.html">Nutrition</a> </li>
+        <li> <a href="gyms.html">Find Gyms</a> </li>
+        <li class= "rankinglist">
+            <form action="/ranking" method= "post">
+                <button type = "submit" id = "signout_button" style= "background-color: transparent; margin-bottom:5px;">
+                <span>
+                <a> Leaderboards </a> </span></button></form></li>
+        <li class= "trainerlist"> 
+                <form action="/trainers" method="post">
+                    <button type="submit" id="signout_button" style="
+                      background-color: transparent;
+                      margin-bottom: 5px;"><span>
+                    <a>Talk to a Trainer</a></span></button>
+        </form></li>
+        <li> <a href="/customerService">Public Chatroom</a> </li>
+        <li class= "buddy"> 
+                <form action="/buddy" method="post">
+                    <button type="submit" id="signout_button" style="
+                      background-color: transparent;
+                      margin-bottom: 5px;"><span>
+                    <a>Find a Fitness Buddy</a></span></button>
+        </form></li>
+        <li class= "right"> 
+            <form action="/signout" method="post">
+                <button type="submit" id="signout_button" style="
+                  background-color: transparent;
+                  margin-bottom: 5px;"><span>
+                <a>Sign Out</a></span></button>
+            </form></li>   
+    </ul>
+
+    <div class="container">
+        <div class="content">
+            Find exercises by category... <br><br>
+            
+            <select id="ex_cat">
+                <option hidden disabled selected value id=""> -- select an option -- </option>
+                <option value="10" id="10" data-id="1">Abs</option>
+                <option value="8" id="8" data-id="2">Arms</option>
+                <option value="12" id="12" data-id="3">Back</option>
+                <option value="14" id="14" data-id="4">Calves</option>
+                <option value="11" id="11" data-id="5">Chest</option>
+                <option value="9" id="9" data-id="6">Legs</option>
+                <option value="13" id="13" data-id="7">Shoulders</option>
+            </select>
+            <button type="submit" onclick="queryAPI()">Submit</button> 
+            
+            <br><br>Or by equipment type:<br><br>
+
+            <select id="ex_eq">
+                <option hidden disabled selected value id=""> -- select an option -- </option>
+                <option value="1" id="1" data-id="1">Barbell</option>
+                <option value="8" id="8" data-id="2">Bench</option>
+                <option value="3" id="3" data-id="3">Dumbbell</option>
+                <option value="4" id="4" data-id="4">Gym mat</option>
+                <option value="6" id="6" data-id="8">Pull-up bar</option>
+                <option value="2" id="2" data-id="10">SZ-bar</option>
+            </select>
+            <button type="submit" onclick="queryAPI2()">Submit</button> 
+            </div>
+            
+            <div id="exercises2"></div>
+            
+        </div>
+
+        <footer>
+        <p>Group Pineapple | copyright 2019</p>
+        </footer>
+    
+        <script type="text/javascript" src="./workouts.js"></script>
+    </body>
+</html>
+    

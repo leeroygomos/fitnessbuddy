@@ -1,0 +1,28 @@
+extends layout
+block content
+    .container
+        .display-wrapper
+            -if(users.length == 0)
+                span no user yet
+            -else
+                table
+                    thead
+                        th(width=150) username   
+                        th(width=150) name
+                        th(width=150) height
+                        th(width=150) weight
+                        th(width=150) dob
+                        th(width=150) activity
+                        th(width=150) operation
+                    tbody
+                        each item in users
+                            tr(style='text-align:center;')
+                                td=item.username
+                                td=item.name
+                                td=item.height
+                                td=item.weight
+                                td=item.dob
+                                td=item.activity        
+                                td
+                                    button delete
+                                    button alter 

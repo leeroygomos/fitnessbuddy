@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Search for Workouts</title>
+    <script src= "https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <link href="css/workouts.css" rel="stylesheet" type = "text/css">
+</head>
+
+<body>
+        <ul class="topnav">
+        <li> <a href="/">Home</a> </li>
+        <li> <a class= "active" href= "workout_trainer.html"> Workouts </a> </li>
+        <li> <a href="nutrition_trainer.html">Nutrition</a> </li>
+        <li> <a href="gyms_trainer.html">Find Gyms</a> </li>
+        <li class= "rankinglist">
+            <form action="/chat" method= "post">
+                <button type = "submit" id = "signout_button" style= "background-color: transparent; margin-bottom:5px;">
+                <span>
+                <a> Your Private Chatroom </a> </span></button></form></li>
+        <li class= "right"> 
+            <form action="/signout" method="post">
+                <button type="submit" id="signout_button" style="
+                  background-color: transparent;
+                  margin-bottom: 5px;"><span>
+                <a>Sign Out</a></span></button>
+            </form></li>   
+    </ul>
+
+  <div class="container">
+    <div class="content">
+        <span class="left">
+        Find exercises by category... <br><br>
+        <select id="ex_cat">
+            <option hidden disabled selected value id=""> -- select an option -- </option>
+            <option value="10" id="10" data-id="1">Abs</option>
+            <option value="8" id="8" data-id="2">Arms</option>
+            <option value="12" id="12" data-id="3">Back</option>
+            <option value="14" id="14" data-id="4">Calves</option>
+            <option value="11" id="11" data-id="5">Chest</option>
+            <option value="9" id="9" data-id="6">Legs</option>
+             <option value="13" id="13" data-id="7">Shoulders</option>
+        </select>
+        <button type="submit" onclick="queryAPI()">Submit</button> 
+        </span>
+
+        <span class="right">
+        Or by equipment type:<br><br>
+        <select id="ex_eq">
+            <option hidden disabled selected value id=""> -- select an option -- </option>
+            <option value="1" id="1" data-id="1">Barbell</option>
+            <option value="8" id="8" data-id="2">Bench</option>
+            <option value="3" id="3" data-id="3">Dumbbell</option>
+            <option value="4" id="4" data-id="4">Gym mat</option>
+            <option value="6" id="6" data-id="8">Pull-up bar</option>
+            <option value="2" id="2" data-id="10">SZ-bar</option>
+        </select>
+        <button type="submit" onclick="queryAPI2()">Submit</button> 
+        </span> 
+
+        <br><br><br>
+
+        <div id="exercises2"></div>
+        
+    </div>
+  </div>
+
+  <footer>
+    <p>Group Pineapple | copyright 2019</p>
+  </footer>
+
+  <script>
+        function createNode(el) {
+            return document.createElement(el); 
+        }
+    
+        function append(par, el) {
+            return par.appendChild(el); 
+        }  
+        
+        const set1 = [91,94,92,125,126,93,95],
+              set2 = [88,74,81,80,129,82,83,87,85,84,86,138,89,90,139],
+              set3 = [109,110,105,128,143,144,141,107,140,142,108,106],
+              set4 = [104,103,102],
+              set5 = [97,98,99,100,101,122,145,146],
+              set6 = [112,113,116,154,117,118,115,114,130,111],
+              set7 = [124,148,149,119,123,152,155,150,151,147,127];
+
+    queryAPI = function() {
+        let x = document.getElementById("ex_cat").value; //get selected category
+        console.log(x);
+        const url1 = 'https://wger.de/api/v2/exercise/?format=json&license_author=wger.de&language=2&category=' + x;
+        const urls = checkCtg(url1, x); //generate image urls
+        const list2 = document.getElementById('exercises2'); //get div box
+        list2.innerHTML = ""; //clear div box
+
+        //fetch each url async
+        Promise.all(urls.map(url =>
+            fetch(url)                
+                .then(response => response.json())
+                .catch(function (err) {
+                    console.log(err);
+                })
+        )) 
+        .then(function(data) {
+            var exercises = data[0].results; //now a numbered list of elements: 0,1,2,...
+            var images = [];
+            for (let i = 1; i < data.length; i++) {
+                if(data[i].results[0] == null){
+                    images.push(null);
+                } else {
+                    images.push(data[i].results[0].image);
+                }
+                //console.log('test', images);
+            } 
+            list2.innerHTML = `Number of results: ${exercises.length}<br><br><br>`;
+
+            let i = 0;
+            exercises.map(function(exercise) {  //iterate over results
+                //console.log(exercise.id);
+                let li = createNode('li'), 
+                    img = createNode('img'),
+                    span = createNode('span'),
+                    span2 = createNode('span'),
+                    tr = createNode('tr'),
+                    td = createNode('td');
+
+                if(images[i] == null) {
+                    img.src = "";
+                    span.innerHTML = `
+                    >>&nbsp;&nbsp;&nbsp;<b>${exercise.name}</b>:
+                    `;
+                } else {
+                    img.src = images[i];
+                    img.style = "height:15%"
+                    span.innerHTML = `
+                    >>&nbsp;&nbsp;&nbsp;<b>${exercise.name}</b>:<br><br>
+                `;
+                }
+                if(exercise.description == "<p>.</p>" || exercise.description == "") {
+                    exercise.description = "<p><i>No description available.</i></p>";
+                }
+                span2.innerHTML = `
+                    ${exercise.description}<br>
+                `;
+                append(td, span);
+                append(td, img);
+                append(td, span2);
+                append(tr, td);
+                append(list2, tr);
+                i++;
+            })
+        })
+        .catch(function (err) {
+            console.log(err);
+        })
+    }
+
+    queryAPI2 = function() {
+        let x = document.getElementById("ex_eq").value; //get selected equipment type
+        console.log(x);
+        const url = 'https://wger.de/api/v2/exercise/?format=json&license_author=wger.de&language=2&equipment=' + x;
+        const list2 = document.getElementById('exercises2'); //get div box
+        list2.innerHTML = ""; //clear div box
+
+        fetch(url)                
+            .then(function(response) {
+                if (response.status !== 200) {
+                    console.log('Error, status code: ' + response.status);
+                }
+                return response.json();
+            })       
+            .then(function(data) {
+                var exercises = data.results; //now a numbered list of elements: 0,1,2,...
+                //var images = [];
+                list2.innerHTML = `Number of results: ${exercises.length}<br><br><br>`;
+
+                exercises.map(function(exercise) {  //iterate over results
+                    //console.log(exercise.id);
+                    let span = createNode('span'),
+                        span2 = createNode('span'),
+                        tr = createNode('tr'),
+                        td = createNode('td');
+
+                    span.innerHTML = `
+                        >>&nbsp;&nbsp;&nbsp;<b>${exercise.name}</b>:
+                    `;
+                    if(exercise.description == "<p>.</p>" || exercise.description == "") {
+                        exercise.description = "<p><i>No description available.</i></p>";
+                    }
+                    span2.innerHTML = `
+                        ${exercise.description}<br>
+                    `;
+                    append(td, span);
+                    //append(td, img);
+                    append(td, span2);
+                    append(tr, td);
+                    append(list2, tr);
+                })
+            })
+            .catch(function (err) {
+                console.log(err);
+            })
+    }
+
+    testfn = function() {
+        let x = document.getElementById("ex_cat").value;
+        const url1 = 'https://wger.de/api/v2/exercise/?format=json&license_author=wger.de&language=2&category=' + x;
+        // const urls = [
+        //     url1,
+        //     'http://wger.de/api/v2/exerciseimage/?format=json' //http://wger.de/api/v2/exerciseimage/<id>/thumbnails/?format=json
+        // ];
+        const urls = checkCtg(url1, x);
+        const list2 = document.getElementById('exercises2');
+        list2.innerHTML = ""; //clear div box
+        
+        //console.log('testfn: ', urls);
+    }
+
+    checkCtg = function(u, x) {
+        let urls = [u];
+        if (x == 10) {
+            for (let i = 0; i < set1.length; i++) {
+                urls.push('https://wger.de/api/v2/exerciseimage/?format=json&exercise=' + set1[i])
+            }
+        } else if (x == 8) {
+            for (let i = 0; i < set2.length; i++) {
+                urls.push('https://wger.de/api/v2/exerciseimage/?format=json&exercise=' + set2[i])
+            }
+        } else if (x == 12) {
+            for (let i = 0; i < set3.length; i++) {
+                urls.push('https://wger.de/api/v2/exerciseimage/?format=json&exercise=' + set3[i])
+            }
+        } else if (x == 14) {
+            for (let i = 0; i < set4.length; i++) {
+                urls.push('https://wger.de/api/v2/exerciseimage/?format=json&exercise=' + set4[i])
+            }
+        } else if (x == 11) {
+            for (let i = 0; i < set5.length; i++) {
+                urls.push('https://wger.de/api/v2/exerciseimage/?format=json&exercise=' + set5[i])
+            }
+        } else if (x == 9) {
+            for (let i = 0; i < set6.length; i++) {
+                urls.push('https://wger.de/api/v2/exerciseimage/?format=json&exercise=' + set6[i])
+            }
+        } else {
+            for (let i = 0; i < set7.length; i++) {
+                urls.push('https://wger.de/api/v2/exerciseimage/?format=json&exercise=' + set7[i])
+            }
+        }
+        return urls;
+    }
+    </script>
+</body>
+</html>

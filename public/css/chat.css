@@ -1,0 +1,136 @@
+html,body{
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background: #ffff;
+    font-family: sans-serif;
+}
+footer{
+    width: 100%;
+    box-sizing: border-box;
+    height: 80px;
+    position: relative;
+    bottom: 0px;
+    border-top: 1px solid rgb(139,168,84);
+    margin-top:3%;
+    padding: 2px;
+  }
+  footer p{
+    width: 80%;
+    margin: 0 auto;
+    border-top: 1px solid rgb(139,168,84);
+    color: rgb(139,168,84);
+    text-align: center;
+    padding: 10px;
+}
+
+
+#signout_button{
+    border: none;
+    outline: none;
+    background: none;
+    cursor: pointer;
+    color: #0000EE;
+    padding: 0;
+    text-decoration: none;
+    font-family: inherit;
+    font-size: inherit;
+}
+
+
+.main-container{
+    background-color: rgb(185, 207, 142);
+    width: 60%;
+    float: left;
+    margin : 5px;
+    position: relative;
+    border: 1px solid black;
+}
+
+.connected-users{
+    margin-left: 10px;
+    float: left;
+    position: relative;
+}
+
+.handle{
+    display: flex;
+    align-items: center;
+}
+#msg{
+    width: calc(100% - 110px);
+    height: 40px;
+    font-size: 32px;
+    line-height: 40px;
+    margin: 3%;
+    padding: 0;
+    outline: none;
+    /* border: none; */
+    cursor: text;
+}
+#btn-submit{
+    width: 100px;
+    height: 40px;
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+    margin-bottom: 2%;
+}
+.chat-content{
+    height: 500px;
+    overflow-y: scroll;
+    margin-bottom: 2%;
+    position: relative;
+}
+.me{
+    color: black;
+    border: 1px solid white;
+    border-radius: 5px;
+    background: #c2e0bc;
+    min-height: 40px;
+    font-size: 26px;
+    line-height: 40px;
+    text-align: right;
+    padding: 0 10px;
+}
+.you{
+    color: black;
+    border: 1px solid #e8e8e8;
+    border-radius: 5px;
+    background: rgb(111, 129, 109);
+    min-height: 40px;
+    font-size: 26px;
+    line-height: 40px;
+    text-align: left;
+    padding: 0 10px;
+}
+ul.topnav {
+  height:50px;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: rgb(139,168,84);
+}
+
+ul.topnav li {float: left;}
+
+ul.topnav li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size:18px;
+}
+
+ul.topnav li a:hover:not(.active) {background-color: rgb(87, 116, 35);}
+
+ul.topnav li a.active {background-color: rgb(113, 142, 59)}
+
+ul.topnav li.right {float: right;}
+
+@media screen and (max-width: 600px) {
+  ul.topnav li.right, 
+  ul.topnav li {float: none;}
+}
